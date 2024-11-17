@@ -8,13 +8,13 @@ import Dto_Generics.Generic;
 abstract class WorkOfArtController {
   //  abstract boolean register(Painting objPainting, Portrait objPortrait, Sculpture objSculpture);
     
-    abstract <T> boolean register(Generic objT);
+    abstract <T> boolean register(T obj);
 
     abstract String search(String titleArtwork);
     
    // abstract boolean update(Painting objPainting, Portrait objPortrait, Sculpture objSculpture);
 
-    abstract <T> boolean update(String titleArtwork, Generic objT);
+    abstract <T> boolean update(String titleArtwork, T obj);
 
     abstract boolean remove(String titleArtwork);
 

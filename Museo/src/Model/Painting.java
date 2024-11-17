@@ -40,8 +40,14 @@ public class Painting extends WorkOfArt {
         this.width = width;
         this.technique = technique;
     }
+
+
+
+        
+    }
+
     
        
-    }
+    
     
 
