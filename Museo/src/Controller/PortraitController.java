@@ -1,62 +1,112 @@
 package Controller;
 
 import Model.Portrait;
-import java.util.HashMap;
-import java.util.Map;
+import Dto_Generics.Generic;
+import java.util.ArrayList;
+        
+        
+public class PortraitController extends WorkOfArtController
+{
+    private final ArrayList<Portrait> ListPortrait = new ArrayList<>();
+           
+    
+    @Override
+    public <T> boolean register(T obj) {
+        try {
+            if (obj == null) {
+                return false;
+            } else {
+                Portrait objPortrait = (Portrait) obj; 
+                this.ListPortrait.add(objPortrait);
 
-public class PortraitController {
-
-    private final Map<String, Portrait> portraitMap = new HashMap<>(); // Usamos un Map para almacenar los retratos
-
-    // Registrar un nuevo retrato
-    public boolean register(Portrait portrait) {
-        if (portrait == null || portraitMap.containsKey(portrait.getTitleArtwork())) {
-            return false; // Si el retrato es nulo o ya está registrado, no lo registramos
+                return true;
+            }
+        } catch (Exception e) {
+            return false;
         }
-        portraitMap.put(portrait.getTitleArtwork(), portrait); // Registramos el retrato
-        return true;
     }
 
-    // Buscar un retrato por su título
+    @Override
     public String search(String titleArtwork) {
-        Portrait portrait = portraitMap.get(titleArtwork);
-        if (portrait != null) {
-            return portrait.toString(); // Retorna la información del retrato
+            String result = "";
+
+        for (int i = 0; i < this.ListPortrait.size(); i++) {
+            if (this.ListPortrait.get(i).getTitleArtwork().equals(titleArtwork)) {
+                result = "\nNombre del Retrato: " + this.ListPortrait.get(i).getTitleArtwork()
+                        + "\nAutor: " + this.ListPortrait.get(i).getAuthor() 
+                        +"\nTamaño en cm "+this.ListPortrait.get(i).getHeight() + " x "
+                        + this.ListPortrait.get(i).getWidth() +
+                        "\n¿Esta en venta? " + this.ListPortrait.get(i).getSale();
+                
+
+                break;
+            }
         }
-        return "Retrato no encontrado.";
+        return result;
     }
 
-    // Actualizar los detalles de un retrato
-    public boolean update(String titleArtwork, Portrait updatedPortrait) {
-        Portrait portrait = portraitMap.get(titleArtwork);
-        if (portrait != null) {
-            portrait.setAuthor(updatedPortrait.getAuthor());
-            portrait.setHeight(updatedPortrait.getHeight());
-            portrait.setWidth(updatedPortrait.getWidth());
-            portrait.setSale(updatedPortrait.getSale());
-            return true;
+        @Override
+    public <T> boolean update(String titleArtwork, T obj) {
+        boolean result = true;
+        try {
+            if (obj == null) {
+                result = false;
+                return result;
+            } else {
+                Portrait objPainting = (Portrait) obj;
+
+                for (Portrait objtPortrait : this.ListPortrait) {
+                    if (objtPortrait.getTitleArtwork().equals(titleArtwork)) {
+                        objtPortrait.setTitleArtwork(objPainting.getTitleArtwork());
+                       objtPortrait.setAuthor(objPainting.getAuthor());
+                        objtPortrait.setHeight(objPainting.getHeight());
+                        objtPortrait.setWidth(objPainting.getWidth());
+                        objtPortrait.setSale(objPainting.getSale());
+
+                        break;
+                    }
+                }
+            }
+        } catch (Exception e) {
+            result = false;
         }
-        return false;
+        return result;
     }
 
-    // Eliminar un retrato por su título
+    @Override
     public boolean remove(String titleArtwork) {
-        if (portraitMap.containsKey(titleArtwork)) {
-            portraitMap.remove(titleArtwork); // Elimina el retrato del mapa
-            return true;
+        boolean result = true;
+        try {
+            if (titleArtwork == null) {
+                result = false;
+                return result;
+            } else {
+                for (Portrait objtPortrait : this.ListPortrait) {
+                    if (objtPortrait.getTitleArtwork().equals(titleArtwork)) {
+                        this.ListPortrait.remove(objtPortrait);
+                        break;
+                    }
+                }
+            }
+        } catch (Exception e) {
+            result = false;
         }
-        return false;
+        return result;
     }
 
-    // Listar todos los retratos registrados
+    @Override
     public String list() {
-        if (portraitMap.isEmpty()) {
-            return "No hay retratos registrados."; // Mensaje cuando no hay retratos
+            String ListPortrait = "";
+
+        for (int i = 0; i < this.ListPortrait.size(); i++) {
+            ListPortrait += "\nNombre del Retrato: " + this.ListPortrait.get(i).getTitleArtwork()
+                        + "\nAutor: " + this.ListPortrait.get(i).getAuthor() 
+                        +"\nTamaño en cm "+this.ListPortrait.get(i).getHeight() + " x "
+                        + this.ListPortrait.get(i).getWidth() +
+                        "\n¿Esta en venta? " + this.ListPortrait.get(i).getSale() + "\n";
         }
-        StringBuilder list = new StringBuilder();
-        for (Portrait portrait : portraitMap.values()) {
-            list.append(portrait.toString()).append("\n-----------------------------\n");
-        }
-        return list.toString(); // Retorna una lista de todos los retratos registrados
+
+        return ListPortrait;
     }
-}
+    }
+

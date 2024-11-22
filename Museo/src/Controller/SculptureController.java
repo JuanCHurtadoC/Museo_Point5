@@ -1,61 +1,101 @@
 package Controller;
+
+import Dto_Generics.Generic;
 import Model.Sculpture;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
 
-public class SculptureController {
+public class SculptureController extends WorkOfArtController {
+    private final ArrayList<Sculpture> sculptureList = new ArrayList<>();
+/**
+     @Override
+    public <T> boolean register(T obj) {
+        try {
+            if (obj == null) {
+                return false;
+            } else {
+                Portrait objPortrait = (Portrait) obj; 
+                this.ListPortrait.add(objPortrait);
 
-    private final Map<String, Sculpture> sculptureMap = new HashMap<>(); // Usamos un Map para optimizar la búsqueda por título
-
-    // Registrar una nueva escultura
-    public boolean register(Sculpture sculpture) {
-        if (sculpture == null || sculptureMap.containsKey(sculpture.getTitleArtwork())) {
-            return false; // Si la escultura es nula o ya está registrada, no la registramos
+                return true;
+            }
+        } catch (Exception e) {
+            return false;
         }
-        sculptureMap.put(sculpture.getTitleArtwork(), sculpture); // Registramos la escultura
-        return true;
+    }
+ **/
+    @Override
+    public <T> boolean register(T obj) {
+        try {
+            if (obj instanceof Sculpture) {
+                Sculpture sculpture = (Sculpture) obj;
+                this.sculptureList.add(sculpture);
+                return true;
+            }
+        } catch (Exception e) {
+            System.out.println("Error al registrar la escultura: " + e.getMessage());
+        }
+        return false;
     }
 
-    // Buscar una escultura por su título
+    @Override
     public String search(String titleArtwork) {
-        Sculpture sculpture = sculptureMap.get(titleArtwork);
-        if (sculpture != null) {
-            return sculpture.toString(); // Retorna la información de la escultura
+        String result = "Escultura no encontrada.";
+        for (Sculpture sculpture : sculptureList) {
+            if (sculpture.getTitleArtwork().equalsIgnoreCase(titleArtwork)) {
+                result = "\nTítulo: " + sculpture.getTitleArtwork() +
+                         "\nAutor: " + sculpture.getAuthor() +
+                         "\nMaterial: " + sculpture.getMaterial() +
+                         "\nTamaño (litros): " + sculpture.getSize() +
+                         "\nEn venta: " + sculpture.getSale();
+                break; 
+            }
         }
-        return "Escultura no encontrada.";
+        return result;
     }
 
-    // Actualizar los detalles de una escultura
-    public boolean update(String titleArtwork, Sculpture updatedSculpture) {
-        Sculpture sculpture = sculptureMap.get(titleArtwork);
-        if (sculpture != null) {
-            sculpture.setAuthor(updatedSculpture.getAuthor());
-            sculpture.setMaterial(updatedSculpture.getMaterial());
-            sculpture.setSize(updatedSculpture.getSize());
-            sculpture.setSale(updatedSculpture.getSale());
-            return true;
+    @Override
+    public <T> boolean update(String titleArtwork, T obj) {
+        try {
+            if (obj instanceof Sculpture) {
+                Sculpture updatedSculpture = (Sculpture) obj;
+                for (int i = 0; i < sculptureList.size(); i++) {
+                    if (sculptureList.get(i).getTitleArtwork().equalsIgnoreCase(titleArtwork)) {
+                        sculptureList.set(i, updatedSculpture);
+                        return true; // Detener el proceso al actualizar
+                    }
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Error al actualizar la escultura: " + e.getMessage());
         }
         return false;
     }
 
-    // Eliminar una escultura por su título
+    @Override
     public boolean remove(String titleArtwork) {
-        if (sculptureMap.containsKey(titleArtwork)) {
-            sculptureMap.remove(titleArtwork); // Elimina la escultura del mapa
-            return true;
+        for (int i = 0; i < sculptureList.size(); i++) {
+            if (sculptureList.get(i).getTitleArtwork().equalsIgnoreCase(titleArtwork)) {
+                sculptureList.remove(i);
+                return true; // Detener el proceso al eliminar
+            }
         }
         return false;
     }
 
-    // Listar todas las esculturas registradas
+    @Override
     public String list() {
-        if (sculptureMap.isEmpty()) {
-            return "No hay esculturas registradas."; // Mensaje cuando no hay esculturas
+        if (sculptureList.isEmpty()) {
+            return "No hay esculturas registradas.";
         }
-        StringBuilder list = new StringBuilder();
-        for (Sculpture sculpture : sculptureMap.values()) {
-            list.append(sculpture.toString()).append("\n-----------------------------\n");
+        StringBuilder result = new StringBuilder();
+        for (Sculpture sculpture : sculptureList) {
+            result.append("\nTítulo: ").append(sculpture.getTitleArtwork())
+                  .append("\nAutor: ").append(sculpture.getAuthor())
+                  .append("\nMaterial: ").append(sculpture.getMaterial())
+                  .append("\nTamaño (litros): ").append(sculpture.getSize())
+                  .append("\nEn venta: ").append(sculpture.getSale())
+                  .append("\n");
         }
-        return list.toString(); // Retorna una lista de todas las esculturas registradas
+        return result.toString();
     }
 }
