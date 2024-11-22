@@ -3,11 +3,14 @@ package museo;
 import java.util.Scanner;
 import Dto_Generics.Generic;
 import Controller.PaintingController;
+import Controller.PortraitController;
 import Model.Painting;
+import Model.Portrait;
 
 public class Museo {
 private static Scanner scan = new Scanner(System.in);
 private static PaintingController objPaintingController = new PaintingController();
+private static PortraitController objPortraitController = new PortraitController();
     public static void main(String[] args) {
 registerArt();
 Funcionalidades();
@@ -63,6 +66,39 @@ scan.close();
                 }
                 break;
             case 2:
+                
+               System.out.println("\nIngresar Pintura");
+                System.out.println("Nombre de la Pintura: ");
+                scan.nextLine();
+                 titleArtwork = scan.nextLine();               
+                System.out.println("Autor: ");
+                 author = scan.nextLine();               
+                System.out.println("Altura en cm: ");
+                 height = scan.nextDouble();
+                System.out.println("Largo en cm: ");
+                 width = scan.nextDouble();
+                System.out.println("Tecnica: ");
+                scan.nextLine();
+                 technique = scan.nextLine();              
+                System.out.println("¿Esta en venta? Si o No");
+                sale = scan.next();
+                scan.nextLine();
+
+               Portrait objPortrait = new Portrait(height, width, sale, author, titleArtwork);
+
+                 objGeneric.setContent(objPortrait);
+
+               if (objGeneric.getContent() instanceof Portrait) {
+                 if (objPortraitController.register((Portrait) objGeneric.getContent())) {
+                  System.out.println("\nRetrato ingresado correctamente");
+                } else {
+                   System.out.println("\nRetrato no ingresado, intentelo de nuevo");                                                                         
+                   
+                  }
+                    } else {
+                     System.out.println("\nEl objeto no es un retrato, no se puede registrar");
+                    }
+                break; 
                 
             case 3:
                 

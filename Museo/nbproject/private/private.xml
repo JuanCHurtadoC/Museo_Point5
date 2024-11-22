@@ -3,11 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/usuario/Desktop/Museo_Point5/Museo/src/museo/Museo.java</file>
-            <file>file:/C:/Users/usuario/Desktop/Museo_Point5/Museo/src/Controller/PaintingController.java</file>
-            <file>file:/C:/Users/usuario/Desktop/Museo_Point5/Museo/src/Model/Portrait.java</file>
-            <file>file:/C:/Users/usuario/Desktop/Museo_Point5/Museo/src/Model/Sculpture.java</file>
-            <file>file:/C:/Users/usuario/Desktop/Museo_Point5/Museo/src/Dto_Generics/Generic.java</file>
+            <file>file:/C:/Users/Personal/Documents/Museo_Point5/Museo/src/Model/WorkOfArt.java</file>
+            <file>file:/C:/Users/Personal/Documents/Museo_Point5/Museo/src/Controller/PortraitController.java</file>
+            <file>file:/C:/Users/Personal/Documents/Museo_Point5/Museo/src/museo/Museo.java</file>
+            <file>file:/C:/Users/Personal/Documents/Museo_Point5/Museo/src/Model/Sculpture.java</file>
+            <file>file:/C:/Users/Personal/Documents/Museo_Point5/Museo/src/Model/Portrait.java</file>
+            <file>file:/C:/Users/Personal/Documents/Museo_Point5/Museo/src/Dto_Generics/Generic.java</file>
+            <file>file:/C:/Users/Personal/Documents/Museo_Point5/Museo/src/Model/Painting.java</file>
+            <file>file:/C:/Users/Personal/Documents/Museo_Point5/Museo/src/Controller/SculptureController.java</file>
         </group>
     </open-files>
 </project-private>
