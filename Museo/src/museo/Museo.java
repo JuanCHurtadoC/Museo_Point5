@@ -155,6 +155,7 @@ scan.close();
         
      switch(option){ 
          case 1:    
+                 
             int option2;
             System.out.println("Ingrese que opcion desea ejecutar");
             System.out.println("1 Listar");
@@ -378,17 +379,117 @@ scan.close();
              }
              break;
          case 3:   
-             
-             System.out.println("\nLista de Retratos");
+             int option4;
+            System.out.println("Ingrese que opcion desea ejecutar");
+            System.out.println("1 Listar");
+            System.out.println("2 Buscar");
+            System.out.println("3 Actualizar");
+            System.out.println("4 Eliminar");
+            option4 = scan.nextInt();    
+             switch(option4) {  
+                case 1:{
+                    System.out.println("\nLista de Esculturas");
 
                     String result = objSculptureController.list();
 
                     if (result != "") {
                     System.out.println(result);}
                     else {
-                    System.out.println("\nNo hay Retratos registradas!");
+                    System.out.println("\nNo hay esculturas registradas!");
                     }
-                    break;
+                    }break;
+                case 2:{
+                    System.out.println("Ingrese el nombre de la escultura que desea buscar: ");
+                    scan.nextLine();
+                    String titleArtwork = scan.nextLine();
+
+                    String result2 = objSculptureController.search(titleArtwork);
+                    if (result2 != "") {
+                    System.out.println("\nDatos de la escultura");
+                    System.out.println(result2);
+                    } else {
+                    System.out.println("\nescultura no encontrada");
+                    }
+                    }break;
+                case 3:{
+                   System.out.println("\nActualizar escultura");
+                    System.out.println("Ingrese el nombre de la escultura que desea buscar para actualizar: ");
+                    scan.nextLine();
+                    String searchTitleArtwork = scan.nextLine();
+
+                    String result3 = objSculptureController.search(searchTitleArtwork);
+                    if (result3 != "") {
+                        System.out.println("\nDatos de la escultura");
+                        System.out.println(result3);
+
+                        System.out.println("\n¿Desea actualizar los datos de la escultura? Si o No");
+                        sw2 = scan.next().toUpperCase().charAt(0);
+
+                        if (sw2 == 'S') {
+                            System.out.println("\nIngresar escultura");
+                            System.out.println("Nombre de la escultura: ");
+                            scan.nextLine();
+                            String titleArtwork = scan.nextLine();                
+                            System.out.println("Autor: ");
+                            String author = scan.nextLine();               
+                            System.out.println("volumen en cm3 o litros: ");
+                            double size = scan.nextDouble();
+                            scan.nextLine();
+                            System.out.println("tipo de material: ");
+                            String material = scan.nextLine();
+                            scan.nextLine();            
+                            System.out.println("¿Esta en venta? Si o No");
+                            String sale = scan.next();
+                            scan.nextLine();
+
+                            Sculpture objSculpture = new Sculpture(size, material, sale,author, titleArtwork);
+
+                            Generic<Sculpture> objGeneric = new Generic<>();
+                            objGeneric.setContent(objSculpture);
+
+                        if (objSculptureController.update(searchTitleArtwork, objSculpture)) {
+                            if (objSculptureController.update(searchTitleArtwork, objGeneric.getContent())) {
+                                System.out.println("\nescultura actualizada correctamente.");
+                            }
+                        }else {
+                            System.out.println("\nescultura no se logro actualizar.");
+                            }
+                    }} else {
+                        System.out.println("\nescultura no se encontro");
+                        }
+                    }break;
+                case 4: {
+                    System.out.println("\nRemover escultura");
+                    System.out.println("Ingrese el nombre de la escultura que desea eliminar: ");
+                    scan.nextLine();
+                    String titleArtwork = scan.nextLine();
+
+                    String result = objSculptureController.search(titleArtwork);
+                    if (result != "") {
+                        System.out.println("\nDatos de la escultura");
+                        System.out.println(result);
+
+                        System.out.println("\n¿Desea eliminar los datos de la escultura? Si o No ");
+                        sw2 = scan.next().toUpperCase().charAt(0);
+
+                        if (sw2 == 'S') {
+                            if (objSculptureController.remove(titleArtwork)) {
+                                System.out.println("\nescultura Eliminada exitosamente!");
+                            } else {
+                                System.out.println("\nescultura no se logró eliminar.");
+                            }
+                        }
+                    } else {
+                        System.out.println("\nescultura no se encontro.");
+                    }
+                    }break;
+
+
+                
+                default: 
+                    System.out.println("Opcion seleccionada no valida");
+             }
+             break;
              
             
         }
