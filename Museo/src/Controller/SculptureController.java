@@ -28,9 +28,9 @@ public class SculptureController extends WorkOfArtController {
 
         for (int i = 0; i < this.ListSculpture.size(); i++) {
             if (this.ListSculpture.get(i).getTitleArtwork().equals(titleArtwork)) {
-                result = "\nNombre del Retrato: " + this.ListSculpture.get(i).getTitleArtwork()
+                result = "\nNombre de la escultura: " + this.ListSculpture.get(i).getTitleArtwork()
                         + "\nAutor: " + this.ListSculpture.get(i).getAuthor() 
-                        +"\nTamaño en cm cubicos o litros "+this.ListSculpture.get(i).getSize() 
+                        +"\nVolumen "+this.ListSculpture.get(i).getSize() + "cm cubicos" 
                         + "\nTipo de material " + this.ListSculpture.get(i).getMaterial() + 
                         "\n¿Esta en venta? " + this.ListSculpture.get(i).getSale();
                 
@@ -95,10 +95,10 @@ public class SculptureController extends WorkOfArtController {
             String ListSculpture = "";
 
         for (int i = 0; i < this.ListSculpture.size(); i++) {
-            ListSculpture += "\nNombre del Retrato: " + this.ListSculpture.get(i).getTitleArtwork()
+            ListSculpture += "\nNombre de la escultura: " + this.ListSculpture.get(i).getTitleArtwork()
                         + "\nAutor: " + this.ListSculpture.get(i).getAuthor() 
-                        +"\nTamaño en cm "+this.ListSculpture.get(i).getSize() + "\nTipo de material "
-                        + this.ListSculpture.get(i).getMaterial() +
+                        +"\nVolumen "+this.ListSculpture.get(i).getSize() +"cm cubicos"+ 
+                    "\nTipo de material "+ this.ListSculpture.get(i).getMaterial() +
                         "\n¿Esta en venta? " + this.ListSculpture.get(i).getSale() + "\n";
         }
 
