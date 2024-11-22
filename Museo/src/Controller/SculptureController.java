@@ -5,16 +5,15 @@ import Model.Sculpture;
 import java.util.ArrayList;
 
 public class SculptureController extends WorkOfArtController {
-    private final ArrayList<Sculpture> sculptureList = new ArrayList<>();
-/**
-     @Override
+    private final ArrayList<Sculpture> ListSculpture = new ArrayList<>();
+@Override
     public <T> boolean register(T obj) {
         try {
             if (obj == null) {
                 return false;
             } else {
-                Portrait objPortrait = (Portrait) obj; 
-                this.ListPortrait.add(objPortrait);
+                Sculpture objSculpture = (Sculpture) obj; 
+                this.ListSculpture.add(objSculpture);
 
                 return true;
             }
@@ -22,80 +21,87 @@ public class SculptureController extends WorkOfArtController {
             return false;
         }
     }
- **/
-    @Override
-    public <T> boolean register(T obj) {
-        try {
-            if (obj instanceof Sculpture) {
-                Sculpture sculpture = (Sculpture) obj;
-                this.sculptureList.add(sculpture);
-                return true;
-            }
-        } catch (Exception e) {
-            System.out.println("Error al registrar la escultura: " + e.getMessage());
-        }
-        return false;
-    }
 
     @Override
     public String search(String titleArtwork) {
-        String result = "Escultura no encontrada.";
-        for (Sculpture sculpture : sculptureList) {
-            if (sculpture.getTitleArtwork().equalsIgnoreCase(titleArtwork)) {
-                result = "\nTítulo: " + sculpture.getTitleArtwork() +
-                         "\nAutor: " + sculpture.getAuthor() +
-                         "\nMaterial: " + sculpture.getMaterial() +
-                         "\nTamaño (litros): " + sculpture.getSize() +
-                         "\nEn venta: " + sculpture.getSale();
-                break; 
+            String result = "";
+
+        for (int i = 0; i < this.ListSculpture.size(); i++) {
+            if (this.ListSculpture.get(i).getTitleArtwork().equals(titleArtwork)) {
+                result = "\nNombre del Retrato: " + this.ListSculpture.get(i).getTitleArtwork()
+                        + "\nAutor: " + this.ListSculpture.get(i).getAuthor() 
+                        +"\nTamaño en cm cubicos o litros "+this.ListSculpture.get(i).getSize() 
+                        + "\nTipo de material " + this.ListSculpture.get(i).getMaterial() + 
+                        "\n¿Esta en venta? " + this.ListSculpture.get(i).getSale();
+                
+
+                break;
             }
         }
         return result;
     }
 
-    @Override
+        @Override
     public <T> boolean update(String titleArtwork, T obj) {
+        boolean result = true;
         try {
-            if (obj instanceof Sculpture) {
-                Sculpture updatedSculpture = (Sculpture) obj;
-                for (int i = 0; i < sculptureList.size(); i++) {
-                    if (sculptureList.get(i).getTitleArtwork().equalsIgnoreCase(titleArtwork)) {
-                        sculptureList.set(i, updatedSculpture);
-                        return true; // Detener el proceso al actualizar
+            if (obj == null) {
+                result = false;
+                return result;
+            } else {
+                Sculpture objSculpture = (Sculpture) obj;
+
+                for (Sculpture objtSculpture : this.ListSculpture) {
+                    if (objtSculpture.getTitleArtwork().equals(titleArtwork)) {
+                        objtSculpture.setTitleArtwork(objSculpture.getTitleArtwork());
+                       objtSculpture.setAuthor(objSculpture.getAuthor());
+                        objtSculpture.setSize(objSculpture.getSize());
+                        objtSculpture.setMaterial(objSculpture.getMaterial());
+                        objtSculpture.setSale(objSculpture.getSale());
+
+                        break;
                     }
                 }
             }
         } catch (Exception e) {
-            System.out.println("Error al actualizar la escultura: " + e.getMessage());
+            result = false;
         }
-        return false;
+        return result;
     }
 
     @Override
     public boolean remove(String titleArtwork) {
-        for (int i = 0; i < sculptureList.size(); i++) {
-            if (sculptureList.get(i).getTitleArtwork().equalsIgnoreCase(titleArtwork)) {
-                sculptureList.remove(i);
-                return true; // Detener el proceso al eliminar
+        boolean result = true;
+        try {
+            if (titleArtwork == null) {
+                result = false;
+                return result;
+            } else {
+                for (Sculpture objtSculpture : this.ListSculpture) {
+                    if (objtSculpture.getTitleArtwork().equals(titleArtwork)) {
+                        this.ListSculpture.remove(objtSculpture);
+                        break;
+                    }
+                }
             }
+        } catch (Exception e) {
+            result = false;
         }
-        return false;
+        return result;
     }
 
     @Override
     public String list() {
-        if (sculptureList.isEmpty()) {
-            return "No hay esculturas registradas.";
+            String ListSculpture = "";
+
+        for (int i = 0; i < this.ListSculpture.size(); i++) {
+            ListSculpture += "\nNombre del Retrato: " + this.ListSculpture.get(i).getTitleArtwork()
+                        + "\nAutor: " + this.ListSculpture.get(i).getAuthor() 
+                        +"\nTamaño en cm "+this.ListSculpture.get(i).getSize() + "\nTipo de material "
+                        + this.ListSculpture.get(i).getMaterial() +
+                        "\n¿Esta en venta? " + this.ListSculpture.get(i).getSale() + "\n";
         }
-        StringBuilder result = new StringBuilder();
-        for (Sculpture sculpture : sculptureList) {
-            result.append("\nTítulo: ").append(sculpture.getTitleArtwork())
-                  .append("\nAutor: ").append(sculpture.getAuthor())
-                  .append("\nMaterial: ").append(sculpture.getMaterial())
-                  .append("\nTamaño (litros): ").append(sculpture.getSize())
-                  .append("\nEn venta: ").append(sculpture.getSale())
-                  .append("\n");
-        }
-        return result.toString();
+
+        return ListSculpture;
     }
-}
+    }

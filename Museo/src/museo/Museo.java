@@ -376,7 +376,7 @@ scan.close();
                 default: 
                     System.out.println("Opcion seleccionada no valida");
              }
-             
+             break;
          case 3:   
              
              System.out.println("\nLista de Retratos");
